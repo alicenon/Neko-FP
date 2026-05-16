@@ -149,20 +149,9 @@ if excel_files:
         key="main_file_selector"
     )
     
-    # Botón para borrar filtros en la sidebar
-    st.sidebar.write("---")
-    if st.sidebar.button("🧹 Borrar Todos los Filtros", use_container_width=True):
-        # Reiniciar todas las claves de filtros
-        for key in ["search_box", "filter_acronimo", "filter_municipio", "filter_modalidad", "filter_turno", "filter_centro"]:
-            if key in st.session_state:
-                st.session_state[key] = "Todos" if "filter" in key else ""
-        st.rerun()
-        
     st.sidebar.write("---")
     if os.path.exists("kawaii_neko_mascot.png"):
         st.sidebar.image("kawaii_neko_mascot.png", caption="Neko-FP Shannon 🐾")
-    else:
-        st.sidebar.info("🐱 Neko-FP Shannon")
 else:
     file_to_load = None
 
@@ -208,8 +197,18 @@ if file_to_load:
         # INTERFAZ Y CONTROLES
         # ==============================================================================
         
-        # Buscador de texto libre principal
-        search_query = st.text_input("🔍 Buscar por palabra clave (Centro, Municipio, Ciclo...)", placeholder="Escribe aquí para buscar...", key="search_box")
+        # Buscador de texto y Botón de Limpiar en la misma fila (Mejor para móvil)
+        st.write("")
+        sb1, sb2 = st.columns([4, 1])
+        with sb1:
+            search_query = st.text_input("🔍 Buscar por palabra clave", placeholder="Escribe aquí para buscar...", key="search_box")
+        with sb2:
+            st.write(" ") # Espaciado para alinear con el input
+            if st.button("🧹 Borrar", use_container_width=True):
+                for key in ["search_box", "filter_acronimo", "filter_municipio", "filter_modalidad", "filter_turno", "filter_centro"]:
+                    if key in st.session_state:
+                        st.session_state[key] = "Todos" if "filter" in key else ""
+                st.rerun()
         
         # Filtros Horizontales 
         c1, c2, c3, c4 = st.columns(4)
