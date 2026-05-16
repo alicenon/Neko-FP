@@ -204,11 +204,7 @@ if file_to_load:
             search_query = st.text_input("🔍 Buscar por palabra clave", placeholder="Escribe aquí para buscar...", key="search_box")
         with sb2:
             st.write(" ") # Espaciado para alinear con el input
-            if st.button("🧹 Borrar", use_container_width=True):
-                for key in ["search_box", "filter_acronimo", "filter_municipio", "filter_modalidad", "filter_turno", "filter_centro"]:
-                    if key in st.session_state:
-                        st.session_state[key] = "Todos" if "filter" in key else ""
-                st.rerun()
+            st.button("🧹 Borrar", use_container_width=True, on_click=reset_filters)
         
         # Filtros Horizontales 
         c1, c2, c3, c4 = st.columns(4)
