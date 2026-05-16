@@ -8,6 +8,12 @@ import os
 # ==============================================================================
 st.set_page_config(page_title="Neko-FP Shannon 🐱", page_icon="🐱", layout="wide")
 
+# Función para reiniciar filtros (Callback)
+def reset_filters():
+    for key in ["search_box", "filter_acronimo", "filter_municipio", "filter_modalidad", "filter_turno", "filter_centro"]:
+        if key in st.session_state:
+            st.session_state[key] = "Todos" if "filter" in key else ""
+
 # Estilos CSS opcionales para refinar el diseño moderno
 st.markdown("""
 <style>
